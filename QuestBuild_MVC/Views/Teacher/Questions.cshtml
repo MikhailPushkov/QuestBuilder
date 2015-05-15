@@ -1,0 +1,68 @@
+﻿@using QuestBuild_MVC.Models;
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+    ViewBag.Title = "Банк вопросов";
+}
+<script type="text/javascript">
+    var el = document.getElementById("Questions");
+    el.className = "active";
+</script>
+<h2>@ViewBag.Title</h2>
+<ol class="breadcrumb">
+    <li class="active">Предметы</li>
+</ol>
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Предмет</th>
+            <th>Число вопросов</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            List<Subjects> subjects = ViewBag.Teacher.subjects;
+
+            int i = 1;
+            foreach(Subjects subject in subjects)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        <a href="Subject?nameOfSubject=@subject.nameOfSubject">@subject.nameOfSubject</a>
+                    </td>
+                    <td>@ViewBag.CountOfQuestions[i - 1]</td>
+                </tr>
+                i += 1;
+            }
+        }
+    </tbody>
+</table>
+<!-- Button trigger modal -->
+<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+    Добавить предмет
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form method="post" action="Questions">
+                @Html.AntiForgeryToken()
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Введите название предмета</h4>
+            </div>
+            <div class="modal-body">
+                <input class="form-control" name="nameOfSubject">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <input type="submit" class="btn btn-primary" value="Сохранить">
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+

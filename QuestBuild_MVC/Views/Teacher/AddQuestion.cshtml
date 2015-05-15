@@ -1,0 +1,135 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<script type="text/javascript" src="/Scripts/tinymce/tinymce.min.js"></script>
+<script src="/Scripts/PanelsForAnswers.js"></script>
+<script type="text/javascript">
+    var el = document.getElementById("Questions");
+    el.className = "active";
+</script>
+<h2>Банк вопросов</h2>
+<ol class="breadcrumb">
+    <li><a href="Questions">Предметы</a></li>
+    <li><a href="Subject?nameOfSubject=@ViewBag.Title">@ViewBag.Title</a></li>
+    <li class="active">Добавление вопроса</li>
+</ol>
+<input id="subject" type="hidden" value="@ViewBag.Title" />
+<input id="type" type="hidden" value="@ViewBag.Type" />
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <h3>Название вопроса:</h3>
+        <input id="nameOfQuestionField" class="form-control" name="nameOfQuestion" />
+    </div>
+    <div class="col-md-6">
+        <h3>Сложность:</h3>
+        <select id="complexity" name="complexity" class="form-control">
+            <option value="1">Низкая</option>
+            <option value="2">Средняя</option>
+            <option value="3">Высокая</option>
+        </select>
+    </div>
+</div>
+
+<h3>Текст вопроса:</h3>
+<div id="questionArea">
+    <textarea></textarea>
+</div>
+@{
+    string type = ViewBag.Type;
+    switch (type)
+    {
+        case "multiple":
+            {
+                Html.RenderPartial("TypesOfQuestion/_MultiplePartial");
+                break;
+            }
+        case "trueOrLie":
+            {
+                Html.RenderPartial("TypesOfQuestion/_TrueOrLiePartial");
+                break;
+            }
+        case "smalAnswer":
+            {
+                Html.RenderPartial("TypesOfQuestion/_SmalAnswerPartial");
+                break;
+            }
+    }
+}
+<div class="row"> 
+    <div style="margin-top: 5%" class="col-xs-8 col-md-6">
+        <div class="btn-group btn-group-lg">
+            <a href="Subject?nameOfSubject=@ViewBag.Title" class="btn btn-default btn-lg" role="button">Отмена</a>
+            <button class="btn btn-default btn-lg" role="button" onclick=AddQuestion(@ViewBag.Theme)>Сохранить</button>
+        </div>
+    </div> 
+</div>
+@{
+    if(ViewBag.nameOfQuestion != "")
+    { 
+    <input id="nameOfQuestion" type="hidden" value="@ViewBag.nameOfQuestion" name="name" />
+    <input id="complexityGet" type="hidden" value="@ViewBag.complexity" />
+    <input id="textOfQuestion" type="hidden" value="@ViewBag.textOfQuestion" />
+    <input id="idQuesion" type="hidden" value="@ViewBag.idQuestion" />
+    <input id="idAnswer" type="hidden" value="@ViewBag.idAnswer" />
+    
+    if (ViewBag.Type == "multiple")
+    {
+        int i = 1;
+        <input id="count" type="hidden" value="@ViewBag.Count" />
+        foreach(var answer in ViewBag.answers)
+        {
+            string idA = "answerField" + i;
+           
+            <input id="@idA" type="hidden" value="@answer" />
+            
+            
+            i += 1; 
+        }
+        i = 1;
+        foreach(var truth in ViewBag.truth)
+        {
+            string idT = "truth" + i;
+            <input id="@idT" type="hidden" value="@truth" />
+            i += 1;
+        }
+        i = 1;
+        <div id="idAnswers">
+            @{
+            foreach(var idAnswer in ViewBag.idAnswer)
+            {
+            string idAns = "idAnswer" + i;
+            <input id="@idAns" type="hidden" value="@idAnswer" />
+            i += 1;
+            }
+            }
+        </div>
+
+    }
+    else
+    {
+        if (ViewBag.Type != "essay")
+        {
+        <input id="answer" type="hidden" value="@ViewBag.answers[0]" />
+        <input id="truth" type="hidden" value="@ViewBag.truth[0]" />
+        }
+    }
+    }
+}
+
+<div id="modalForOk" class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Вопрос успешно сохранен</h4>
+            </div>
+            <div class="modal-footer">
+                <a href="Subject?nameOfSubject=@ViewBag.Title" class="btn btn-default" role="button">Завершить</a>
+                <button id="btn_moreQuest" type="reset" class="btn btn-default">Добавить еще</button>
+            </div>
+        </div>
+    </div>
+</div>
+

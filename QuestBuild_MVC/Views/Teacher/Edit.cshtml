@@ -1,0 +1,61 @@
+﻿@model QuestBuild_MVC.Models.RegisterOfTeacherViewModel
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+    ViewBag.Title = "Редактировать:";
+}
+<script type="text/javascript">
+    var el = document.getElementById("AboutMe");
+    el.className = "active";
+</script>
+<h2>@ViewBag.Title</h2>
+<hr />
+@using (Html.BeginForm("Edit", "Teacher", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+    <div class="form-group">
+        @Html.LabelFor(m => m.secondNameOfTeacher, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.secondNameOfTeacher, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.firstNameOfTeacher, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.firstNameOfTeacher, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.patronymicOfTeacher, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.patronymicOfTeacher, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Institute, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Institute, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Faculties, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Faculties, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Chair, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Chair, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="btn-group">
+                <input type="submit" class="btn btn-default" value="Сохранить" />
+                <a href="AboutMe" class="btn btn-default" role="button">Отмена</a>
+            </div>
+        </div>
+    </div>
+}
+

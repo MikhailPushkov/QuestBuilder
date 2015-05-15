@@ -1,0 +1,41 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Студент</th>
+            @{
+                foreach(var date in ViewBag.data.dates)
+                {
+                    <th>@date</th>
+                }
+            }
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+            foreach(var studentAndRaiting in ViewBag.data.studentsAndRait)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@studentAndRaiting.nameOfStudent</td>
+                    @{
+                        foreach(var date in ViewBag.data.dates)
+                        {
+                            <td>@studentAndRaiting.raitingWithDay[date]</td>
+                        }
+                    }
+                </tr>
+                i += 1;
+            }
+        }
+    </tbody>
+</table>
+

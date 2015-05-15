@@ -1,0 +1,80 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<h2>Работа со студентами</h2>
+<hr />
+<h3>Группы</h3>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Группа</th>
+            <th>Колличество студентов</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+            foreach (var group in ViewBag.groups)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        <a href="Group?group=@group">@group</a>
+                    </td>
+                    <td>@ViewBag.students[i - 1]</td>
+                </tr>
+                i += 1;
+            }
+        }
+    </tbody>
+</table>
+
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Добавить группу</button>
+    
+
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="Students">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Введите данные группы</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputInstitute" class="col-sm-2 control-label">Институт</label>
+                        <input class="form-control" name="nameOfInstitute" id="inputInstitute" value="@ViewBag.institute">
+                    </div>
+                    <div class="form-group">
+                        <label for="cours" class="col-sm-2 control-label">Курс</label>
+                        <input class="form-control" name="nameOfCours" id="cours" placeholder="Курс" />
+                    </div>
+                    <div class="form-group">
+                        <label for="group" class="col-sm-2 control-label">Группа</label>
+                        <input class="form-control" name="nameOfGroup" id="group" placeholder="Группа" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <input type="submit" class="btn btn-primary" value="Сохранить">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+

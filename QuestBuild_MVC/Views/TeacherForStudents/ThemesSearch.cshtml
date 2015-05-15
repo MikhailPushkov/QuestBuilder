@@ -1,0 +1,13 @@
+﻿   <select id="theme" name="idTheme" onchange="GetSelectedTheme()" class="form-control col-sm-5">
+        @{
+            int i = 0;
+            foreach (var name in ViewBag.names)
+            {
+                <option value="@ViewBag.idThemes[i]">@name</option>
+                i += 1;
+            }
+        }
+    </select>
+<script>var getT = GetSelectedTheme() </script>
+
+

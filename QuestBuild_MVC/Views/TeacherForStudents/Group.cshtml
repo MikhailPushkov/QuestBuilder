@@ -1,0 +1,131 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+<script src="/Scripts/ForStudents.js"></script>
+<script src="/Scripts/jquery-1.10.2.min.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<h2>@ViewBag.Title</h2>
+<hr />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+            foreach (var name in ViewBag.names)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@ViewBag.surnames[i -1]</td>
+                    <td>@name</td>
+                    <td>@ViewBag.patronumicNames[i -1]</td>
+                    <td>
+                        <form method="post" action="ShowStudent">
+                            <input class="hidden" name="idStudent" value="@ViewBag.idStudents[i - 1]" />
+                            <input type="submit" class="btn btn-default" value="Открыть" />
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="DeleteStudent">
+                            <input class="hidden" name="group" value="@ViewBag.Title" />
+                            <input class="hidden" name="idStudent" value="@ViewBag.idStudents[i - 1]" />
+                            <input type="submit" class="btn btn-default" value="Удалить" />
+                        </form>
+                    </td>
+                </tr>
+                i += 1;
+            }
+        }
+    </tbody>
+</table>
+
+
+
+    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Добавить студента</button>
+    <button class="btn btn-primary" data-toggle="modal" data-target="#modalForShow">Посмотреть оценки</button>
+<hr />
+@using (Ajax.BeginForm("ChooseTheme" , new AjaxOptions { UpdateTargetId = "chooseWork" }))
+{
+    <input type="submit" class="btn btn-primary" value="Выставить оценки" /> 
+    <input type="hidden" name="group" value="@ViewBag.Title" />
+    <input type="hidden" name="move" value="now" />
+}
+
+<div id="chooseWork"></div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="Group">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Введите данные о студенте</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="inputInstitute" class="col-sm-2 control-label">Фамилия</label>
+                        <input class="form-control" name="surname" id="inputInstitute" placeholder="Фамилия">
+                    </div>
+                    <div class="form-group">
+                        <label for="cours" class="col-sm-2 control-label">Имя</label>
+                        <input class="form-control" name="name" id="cours" placeholder="Имя" />
+                    </div>
+                    <div class="form-group">
+                        <label for="group" class="col-sm-2 control-label">Отчество</label>
+                        <input class="form-control" name="patrName" id="group" placeholder="Отчество" />
+                    </div>
+                    <input class="hidden" name="group" value="@ViewBag.Title" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <input type="submit" class="btn btn-primary" value="Сохранить">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalForShow" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form method="post" action="ShowRaitings">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">За какой период показать оценки</h4>
+                </div>
+                <div id="modalBody" class="modal-body">
+                    <div class="form-group">
+                        <input class="hidden" name="group" value="@ViewBag.Title" />
+                        <label for="inputInstitute" class="col-sm-4 control-label">Показать оценки</label>
+                        <select id="nameOfPeriod" name="nameOfPeriod" class="form-control" onchange="SetPeriod()">
+                            <option value="week">За неделю</option>
+                            <option value="month">За месяц</option>
+                            <option value="anyPeriod">Выбрать произвольно</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <input type="submit" class="btn btn-primary" value="Показать">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

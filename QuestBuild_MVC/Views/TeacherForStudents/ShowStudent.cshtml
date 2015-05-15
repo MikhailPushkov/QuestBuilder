@@ -1,0 +1,51 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<h2>@ViewBag.Student.name</h2>
+<hr />
+@{
+    if(ViewBag.works > 0)
+    {
+        
+        foreach(var subject in ViewBag.Student.subjects)
+        {
+            <h3>@subject.subjectName</h3>
+            <h4>Средняя оценка: @subject.averRait</h4>
+            <h4>Количество работ: @subject.countOfWorks</h4>
+    
+    <table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Тема</th>
+            <th>Дата проведения</th>
+            <th>оценка</th>
+        </tr>
+    </thead>
+        <tbody>
+            @{
+            int i = 1;
+            foreach(var theme in subject.themesOfWorks)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@theme</td>
+                    <td>@subject.dayOfWorks[i - 1].Date</td>
+                    <td>@subject.raitings[i - 1]</td>
+                </tr>
+                i += 1;
+            }
+            }
+        </tbody>
+        </table>
+
+        }
+    }
+    else
+    {
+        <h3>Этому студенту пока не назначались работы</h3>
+    }
+}
+

@@ -1,0 +1,137 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<h2>@ViewBag.Title</h2>
+<hr />
+<h2>Подтемы</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int i = 1;
+            foreach (var subTheme in ViewBag.subThemes)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        <a href="SubthemesAndQuestions?nameOfTheme=@subTheme">@subTheme</a>
+                    </td>
+                </tr>
+                i += 1;
+            }
+        }
+    </tbody>
+</table>
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Добавить подтему</button>
+<hr />
+<h2>Вопросы</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Тип</th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int j = 1;
+            foreach (var question in ViewBag.Questions)
+            {
+                var id = ViewBag.idQuestions[j - 1];
+                <tr>
+                    <td>@j</td>
+                    <td>@question</td>
+                    <td>@ViewBag.Types[j - 1]</td>
+                    <td>
+                        <form method="post" action="AddQuestion">
+                            <input class="hidden" value="@id" name="idQuestion" />
+                            <input class="hidden" value="@ViewBag.idTheme" name="idTheme" />
+                            <input class="hidden" value="@ViewBag.Title" name="nameOfTheme" />
+                            <input class="hidden" value="o" name="action" />
+                            <input type="submit" class="btn btn-default" value="Открыть" />
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" action="AddQuestion">
+                            <input class="hidden" value="@id" name="idQuestion" />
+                            <input class="hidden" value="@ViewBag.idTheme" name="idTheme" />
+                            <input class="hidden" value="@ViewBag.Title" name="nameOfTheme" />
+                            <input class="hidden" value="d" name="action" />
+                            <input type="submit" class="btn btn-default" value="Удалить" />
+                        </form>
+                    </td>
+                </tr>
+                j += 1;
+            }
+        }
+    </tbody>
+</table>
+<button class="btn btn-primary" data-toggle="modal" data-target="#typeOfQuestionModal" onclick="ChooseMultiple()">Добавить вопрос</button>
+
+
+
+<script src="/Scripts/ForQuestions.js"></script>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form method="post" action="SubthemesAndQuestions">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Введите название подтемы</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" name="nameOfSubTheme">
+                    <input class="hidden" name="idTheme" value="@ViewBag.idTheme" />
+                    <input class="hidden" name="nameOfTheme" value="@ViewBag.Title" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <input type="submit" class="btn btn-primary" value="Сохранить">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="typeOfQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Укажите тип вопроса</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-5">
+                        <ul id="types" class="nav nav-pills nav-stacked">
+                            <li id="multiple" onclick="ChooseMultiple()"><a>Множественный</a></li>
+                            <li id="trueOrLie" onclick="ChooseTrueOrLie()"><a>Верно/Неверно</a></li>
+                            <li id="smalAnswer" onclick="ChooseSmalAnswer()"><a>Краткий ответ</a></li>
+                            <li id="essay" onclick="ChooseEssay()"><a>Эссе</a></li>
+                        </ul>
+                    </div>
+                    <div id="description" class="col-xs-6 col-sm-7"></div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <a id="link" href="" type="button" class="btn btn-primary" onclick=GetHref(@ViewBag.idTheme)>Продолжить</a>
+            </div>
+        </div>
+    </div>
+</div>

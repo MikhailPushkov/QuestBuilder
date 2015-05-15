@@ -1,0 +1,47 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+    ViewBag.Title = "Личная информация:";
+}
+<script type="text/javascript">
+    var el = document.getElementById("AboutMe");
+    el.className = "active";
+</script>
+<h2>@ViewBag.Title</h2>
+<div class="row">
+    <div class="col-xs-11 col-md-7">
+        <h2 id="name">@ViewBag.Teacher.secondNameOfTeacher @ViewBag.Teacher.firstNameOfTeacher @ViewBag.Teacher.patronymicOfTeacher</h2>
+    </div> 
+    <div class="col-xs-8 col-md-5">
+        <h2>@ViewBag.Teacher.Institute</h2>
+    </div>  
+</div>
+<hr />
+<div class="row">
+    <div class="col-xs-6 col-md-4">
+        <h3>Факультет:</h3>
+    </div>  
+    <div class="col-xs-6 col-md-4">
+        <h3>@ViewBag.Teacher.Faculties</h3>
+    </div>  
+</div>
+<div class="row">
+    <div class="col-xs-6 col-md-4">
+        <h3>Кафедра:</h3>
+    </div> 
+    <div class="col-xs-6 col-md-4">
+        <h3>@ViewBag.Teacher.Chair</h3>
+    </div> 
+</div>
+<div class="row">
+    <div class="col-xs-8 col-md-6">
+        <div style="margin-top: 10%" class="btn-group btn-group-lg">
+            <a href="Edit" class="btn btn-default btn-lg" role="button">Редактировать</a>
+            <a href="/Account/Manage" class="btn btn-default btn-lg" role="button">Сменить пароль</a>
+         </div>
+    </div> 
+</div>
+
+
+
+

@@ -1,0 +1,95 @@
+﻿
+    <div class="btn-group-vertical col-md-7" data-toggle="buttons">
+        @if(ViewBag.multiple > 0)
+        { 
+        <label class="btn btn-default">
+            <input id="multipleCheck" type="checkbox"> Множественный
+        </label>
+        }
+        else
+        {
+        <label class="btn btn-default disabled">
+            <input id="multipleCheck" type="checkbox"> <del>Множественный</del> 
+        </label>
+        }
+        @if (ViewBag.trueOrLie > 0)
+{
+    <label class="btn btn-default">
+        <input id="trueOrLieCheck" type="checkbox"> Правда/Ложь
+    </label>
+}
+else
+{
+    <label class="btn btn-default disabled">
+        <input id="trueOrLieCheck" type="checkbox"> <del>Правда/Ложь</del>
+    </label>
+}
+        @if (ViewBag.smalAnswer > 0)
+{
+    <label class="btn btn-default">
+        <input id="smalAnswerCheck" type="checkbox"> Краткий ответ
+    </label>
+}
+else
+{
+    <label class="btn btn-default disabled">
+        <input id="SmalAnswerCheck" type="checkbox"> <del>Краткий ответ</del>
+    </label>
+}
+        @if (ViewBag.essay > 0)
+{
+    <label class="btn btn-default">
+        <input id="essayCheck" type="checkbox"> Эссе
+    </label>
+}
+else
+{
+    <label class="btn btn-default disabled">
+        <input id="essayCheck" type="checkbox"> <del>Эссе</del>
+    </label>
+}
+    </div>
+    <div id="countQuest" class="col-xs-5">
+        @if(ViewBag.multiple > 0)
+        {
+            string max = "максимум: " + ViewBag.multiple;
+            <input id="multipleCount" class="form-control" placeholder="@max" />
+        }
+        else
+        {
+            <input id="multipleCount" class="form-control" disabled />
+        }
+
+        @if (ViewBag.trueOrLie > 0)
+        {
+            string max = "максимум: " + ViewBag.trueOrLie;
+            <input id="trueOrLieCount" class="form-control" placeholder="@max" />
+        }
+        else
+        {
+            <input id="trueOrLieCount" class="form-control" disabled />
+        }
+        
+        @if (ViewBag.smalAnswer > 0)
+        {
+            string max = "максимум: " + ViewBag.smalAnswer;
+            <input id="smalAnswerCount" class="form-control" placeholder="@max" />
+        }
+        else
+        {
+            <input id="smalAnswerCount" class="form-control" disabled />
+        }
+        
+        @if(ViewBag.essay > 0)
+        {
+            string max = "максимум: " + ViewBag.essay;
+            <input id="essayCount" class="form-control" placeholder="@max" />
+        }
+        else
+        {
+            <input id="essayCount" class="form-control" disabled />
+        }
+
+        
+    </div>
+

@@ -1,0 +1,93 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<h2>Банк вопросов</h2>
+<ol class="breadcrumb">
+    <li><a href="Questions">Предметы</a></li>
+    <li id="subject" class="active">@ViewBag.Title</li>
+</ol>
+<hr />
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Тема</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            
+
+            int i = 1;
+            foreach (var theme in ViewBag.Themes)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>
+                        <a href="SubthemesAndQuestions?nameOfTheme=@theme">@theme</a>
+                    </td>
+                </tr>
+                i += 1;
+            }
+        }
+    </tbody>
+</table>
+
+<!-- Button trigger modal -->
+<button class="btn btn-primary" data-toggle="modal" data-target="#myModal">Добавить тему</button>
+
+<script src="/Scripts/ForQuestions.js"></script>
+<!-- Modal -->
+<div class="modal fade" id="typeOfQuestionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Укажите тип вопроса</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-5">
+                        <ul id="types" class="nav nav-pills nav-stacked">
+                            <li id="multiple" onclick="ChooseMultiple()"><a>Множественный</a></li>
+                            <li id="trueOrLie" onclick="ChooseTrueOrLie()"><a>Верно/Неверно</a></li>
+                            <li id="smalAnswer" onclick="ChooseSmalAnswer()"><a>Краткий ответ</a></li>
+                            <li id="essay" onclick="ChooseEssay()"><a>Эссе</a></li>
+                        </ul>
+                    </div>
+                    <div id="description" class="col-xs-6 col-sm-7"></div>
+                 </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                <a id="link" href="" type="button" class="btn btn-primary" onclick="GetHref()">Продолжить</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form method="post" action="Subject">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title" id="myModalLabel">Введите название темы</h4>
+                </div>
+                <div class="modal-body">
+                    <input class="form-control" name="nameOfTheme">
+                    <input class="hidden" name="nameOfSubject" value="@ViewBag.Title" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <input type="submit" class="btn btn-primary" value="Сохранить">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+

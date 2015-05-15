@@ -1,0 +1,143 @@
+﻿
+@{
+    Layout = "~/Views/Teacher/HomePageForTeacher.cshtml";
+}
+
+<script src="/Scripts/jquery-1.10.2.min.js"></script>
+<script src="/Scripts/jquery.validate.min.js"></script>
+<script src="/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="/Scripts/ForWorks.js"></script>
+
+<h2>Конструктор заданий</h2>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <label for="subject" class="col-sm-4 control-label">Выберите предмет</label>
+        @using (Ajax.BeginForm("ThemesSearch", new AjaxOptions { UpdateTargetId = "results" }))
+{
+    <div class="input-group col-sm-7">
+        <select id="subject" name="idSubject" class="form-control col-sm-5">
+            @{
+               foreach (var subject in ViewBag.subjects)
+               {
+                    <option value="@subject.subjectId">@subject.nameOfSubject</option>
+                }
+            }
+        </select>
+        <span class="input-group-btn">
+            <input type="submit" class="btn btn-default" value="Ok" />
+        </span>
+    </div>
+}
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-5 control-label">Укажите тему</label>
+        <div id="results"></div>
+        </div>
+</div>
+<hr />
+<div class="row">
+   <!--  <div class="col-md-6">
+        <label>
+               Использовать вопросы из подтем выбранной темы
+            <input id="useSubThemes" type="checkbox" onchange="UseSubT()" />
+        </label>
+    </div> -->
+@using (Ajax.BeginForm("GetCountOFQ", new AjaxOptions { UpdateTargetId = "typesOfQ" }))
+{ 
+    <div class="col-md-6">
+        <label for="complexity" class="col-sm-4 control-label">Задайте сложность</label>
+        <div class="input-group col-sm-6">
+            <select id="complexity" name="complexity" class="form-control">
+                <option value="1">Низкая</option>
+                <option value="2">Средняя</option>
+                <option value="3">Высокая</option>
+            </select>
+            <input id="selectedTheme" name="idTheme" class="hidden" />
+            <input id="usingQuestOfSubT" name="usingQuestOfSubT" class="hidden" value="false"/>
+            <span class="input-group-btn">
+                <input type="submit" class="btn btn-default" value="Ok" />
+            </span>
+        </div>
+    </div>
+}
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <label for="typeOfWork" class="col-sm-4 control-label">Укажите тип работы</label>
+        <input id="typeOfWork" name="typeOfWork" class="form-control" />
+    </div>
+    <div class="col-md-6">
+        <label for="dateOfWork" class="col-sm-5 control-label">Дата проведения работы</label> 
+        <input id="dateOfWork" name="dateOfWork" type="date" class="form-control" />
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <label>Добавьте людей</label>
+        <div class="panel-group" id="accordion">
+            @{
+                int i = 0;
+                foreach(var groupAndP in ViewBag.groupsAndPeople)
+                {
+                    string href = "collapse" + i;
+                    string href2 = "#" + href;
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <input id="selectGroup" type="checkbox" onclick="SelectStudents(this)" />
+                                <a data-toggle="collapse" data-parent="#accordion" href=@href2>
+                                    @groupAndP.group
+                                </a>
+                            </h4>
+                        </div>
+                        <div id=@href class="panel-collapse collapse">
+                            <div class="panel-body">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th></th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            int j = 1;
+                                            foreach(var name in groupAndP.peoples)
+                                            {
+                                                <tr>
+                                                    <td>@j</td>
+                                                    <td>
+                                                        <input type="checkbox" name="student" onclick="SelectSomeStudents()" value="@groupAndP.idPeoples[j - 1]" />
+                                                    </td>
+                                                    <td>@name</td>
+                                                </tr>
+                                                j += 1;
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    i += 1;
+                }
+            }
+        </div>
+    </div>
+    <div class="col-md-6">
+        <label class="col-sm-7">Вопросы каких типов использовать?</label>
+        <label class="col-sm-5">Количество вопросов типа</label>
+        <div id="typesOfQ">
+            
+        </div>
+    </div>
+</div>
+<hr />
+<div id="final">
+    <button id="btnCreate" onclick="CreateDataForWork()" class="btn btn-lg btn-primary">Начать создание заданий</button>
+    
+</div>

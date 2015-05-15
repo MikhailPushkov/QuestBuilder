@@ -1,0 +1,58 @@
+﻿<hr />
+<h3>Выберите работу</h3>
+<div class="checkbox">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th></th>
+                <th>Тема</th>
+                <th>Дата проведения</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @{
+                int i = 1;
+                foreach (var day in ViewBag.days)
+                {
+                    <tr>
+                        <td>@i</td>
+                        <td>
+
+                            <input type="radio" value="@day" />
+
+                        </td>
+                        <td>@ViewBag.themes[day]</td>
+                        <td>@day</td>
+                    </tr>
+                    i += 1;
+                }
+            }
+        </tbody>
+    </table>
+</div>
+<input class="hidden" id="idGroup" value="@ViewBag.group" />
+<div class="row">
+    <div class="col-md-4">
+        @using(Ajax.BeginForm("ChooseTheme", new AjaxOptions{ UpdateTargetId = "chooseWork" }))
+        {
+            <input type="submit" class="btn btn-default" value="Назад" />
+            <input class="hidden" name="move" value="back" />
+            <input class="hidden" name="date" value="@ViewBag.start" />
+            <input class="hidden" name="group" value="@ViewBag.nameGroup" />
+        }
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-primary" onclick="GoToRaiting()">Продолжить</button> 
+    </div>
+    <div class="col-md-4">
+        @using (Ajax.BeginForm("ChooseTheme", new AjaxOptions { UpdateTargetId = "chooseWork" }))
+        {
+            <input type="submit" class="btn btn-default" value="Вперед" />
+            <input class="hidden" name="move" value="forward" />
+            <input class="hidden" name="date" value="@ViewBag.stop" />
+            <input id="nameOfGroup" class="hidden" name="group" value="@ViewBag.nameGroup" />
+        }
+    </div>
+</div>
